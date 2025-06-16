@@ -10,9 +10,11 @@ require('dotenv').config();
 const handleErrorResponse = require("./errors/handleErrorResponse");
 
 const versesRoutes = require("./routes/versesRoutes");
+const notesRoutes = require("./routes/notesRoutes");
 const requireAuth = require('./controllers/requireAuth');
 
 app.use("/verses", requireAuth, versesRoutes);
+app.use("/notes", requireAuth, notesRoutes);
 app.use(handleErrorResponse);
 
 app.listen(3000, () => {

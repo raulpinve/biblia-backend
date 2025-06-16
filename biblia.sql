@@ -60,7 +60,7 @@ CREATE TABLE highlighted_verse (
 -- Notas
 CREATE TABLE notes (
   id SERIAL PRIMARY KEY,
-  user_id TEXT REFERENCES users(id),
+  user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
   note TEXT,
   visibility TEXT CHECK (visibility IN ('private', 'friends', 'public')) DEFAULT 'private',
   created_at TIMESTAMP DEFAULT NOW()
@@ -68,8 +68,8 @@ CREATE TABLE notes (
 
 -- Relación nota-versículo
 CREATE TABLE note_verse (
-  note_id INTEGER REFERENCES notes(id),
-  verse_id INTEGER REFERENCES verses(id),
+  note_id INTEGER REFERENCES notes(id) ON DELETE CASCADE,
+  verse_id INTEGER REFERENCES verses(id) ON DELETE CASCADE,
   PRIMARY KEY (note_id, verse_id)
 );
 

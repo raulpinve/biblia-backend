@@ -35,6 +35,7 @@ exports.getVerses = async (req, res, next) => {
         if (rows.length === 0) {
             throwNotFoundError("No hay versículos por mostrar.");
         }
+		await ensureUserExists(req.user);
 
         return res.status(200).json({
             statusCode: 200,

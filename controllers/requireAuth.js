@@ -1,6 +1,5 @@
-// authMiddleware.js
 const { getAuth, clerkClient } = require("@clerk/express");
-const { throwBadRequestError, throwUnauthorizedError } = require("../errors/throwHTTPErrors");
+const { throwUnauthorizedError } = require("../errors/throwHTTPErrors");
 
 async function requireAuth(req, res, next) {
     try {

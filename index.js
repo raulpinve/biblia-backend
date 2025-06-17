@@ -9,12 +9,14 @@ app.use(clerkMiddleware());
 require('dotenv').config();
 const handleErrorResponse = require("./errors/handleErrorResponse");
 
+const requireAuth = require('./controllers/requireAuth');
 const versesRoutes = require("./routes/versesRoutes");
 const notesRoutes = require("./routes/notesRoutes");
-const requireAuth = require('./controllers/requireAuth');
+const friendsRoutes = require("./routes/friendsRoutes");
 
 app.use("/verses", requireAuth, versesRoutes);
 app.use("/notes", requireAuth, notesRoutes);
+app.use("/friends", requireAuth, friendsRoutes)
 app.use(handleErrorResponse);
 
 app.listen(3000, () => {

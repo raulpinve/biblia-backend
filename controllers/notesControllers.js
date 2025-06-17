@@ -40,6 +40,8 @@ exports.addNote = async (req, res, next) => {
 			values
 		);
 
+		await ensureUserExists(req.user);
+
 		return res.status(201).json({
 			statusCode: 201,
 			status: "success",
@@ -66,6 +68,7 @@ exports.getNotesByVerse = async (req, res, next) => {
 				message: "Debes enviar bookId, chapter y verse.",
 			});
 		}
+		await ensureUserExists(req.user);
 
 		// Obtener notas del usuario para ese versículo
 		const { rows: notesWithVerses } = await pool.query(
@@ -154,6 +157,9 @@ exports.getFeedNotes = async (req, res, next) => {
 			`,
 			[userId]
 		);
+
+		await ensureUserExists(req.user);
+
 		const totalNotas = parseInt(countRows[0].count);
 		const totalPaginas = Math.ceil(totalNotas / limite);
 
@@ -264,6 +270,8 @@ exports.getNoteWithVerses = async (req, res, next) => {
 			});
 		}
 
+		await ensureUserExists(req.user);
+
 		// Buscar nota del usuario
 		const { rows: noteRows } = await pool.query(
 			`
@@ -339,6 +347,8 @@ exports.getNotesWithVerses = async (req, res, next) => {
 		);
 		const totalNotas = parseInt(countRows[0].count);
 		const totalPaginas = Math.ceil(totalNotas / limite);
+
+		await ensureUserExists(req.user);
 
 		// Obtener las notas paginadas
 		const { rows: notas } = await pool.query(
@@ -437,6 +447,8 @@ exports.getAllNotesWithVerses = async (req, res, next) => {
 		const totalNotas = parseInt(countRows[0].count);
 		const totalPaginas = Math.ceil(totalNotas / limite);
 
+		await ensureUserExists(req.user);
+
 		// Obtener notas paginadas y filtradas
 		const { rows: notas } = await pool.query(
 			`
@@ -533,6 +545,8 @@ exports.updateNote = async (req, res, next) => {
 			});
 		}
 
+		await ensureUserExists(req.user);
+
 		// Verificar que la nota exista y pertenezca al usuario
 		const { rows: existingNote } = await pool.query(
 			`SELECT id FROM notes WHERE id = $1 AND user_id = $2`,
@@ -582,6 +596,7 @@ exports.deleteNote = async (req, res, next) => {
 			});
 		}
 
+		await ensureUserExists(req.user);
 		await pool.query(
 			`DELETE FROM notes WHERE id = $1 AND user_id = $2`,
 			[noteId, userId]

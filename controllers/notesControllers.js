@@ -5,16 +5,6 @@ exports.addNote = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
 		const { verses, note, visibility} = req.body;
-
-		// Validación básica
-		if (!Array.isArray(verses) || verses.length === 0 || !note?.trim()) {
-			return res.status(400).json({
-				statusCode: 400,
-				status: "fail",
-				message: "Debes enviar una nota y una lista de versículos.",
-			});
-		}
-
 		const visibilityOptions = ['private', 'friends', 'public'];
 		const finalVisibility = visibilityOptions.includes(visibility) ? visibility : 'private';
 
@@ -527,8 +517,6 @@ exports.getAllNotesWithVerses = async (req, res, next) => {
 		next(error);
 	}
 };
-
-
 
 exports.updateNote = async (req, res, next) => {
 	try {

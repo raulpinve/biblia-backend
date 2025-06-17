@@ -1,16 +1,23 @@
 const router = require('express').Router();
 const notesControllers = require("../controllers/notesControllers");
+const { validarAddNote, validarGetFeedNotes, validateGetAllNotesWithVerses, validarGetNotesByVerse, validateUpdateNote } = require('../validators/noteValidators');
 
-router.post("/", notesControllers.addNote);
+// Crear nota
+router.post("/", validarAddNote, notesControllers.addNote);
 
-router.get("/:verseId/verse", notesControllers.getNotesByVerse)
+// Obtener las notas de un verso
+router.get("/:verseId/verse", validarGetNotesByVerse, notesControllers.getNotesByVerse)
 
-router.get("/feed", notesControllers.getFeedNotes)
+// Obtener feed de noticias
+router.get("/feed", validarGetFeedNotes, notesControllers.getFeedNotes)
 
-router.get("/", notesControllers.getAllNotesWithVerses)
+// Obtener las notas del usuario
+router.get("/", validateGetAllNotesWithVerses, notesControllers.getAllNotesWithVerses)
 
-router.put("/:noteId", notesControllers.updateNote)
+// Actualizar nota
+router.put("/:noteId", validateUpdateNote, notesControllers.updateNote)
 
+// Eliminar nota
 router.delete("/:noteId", notesControllers.deleteNote)
 
 module.exports = router

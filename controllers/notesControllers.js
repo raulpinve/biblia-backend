@@ -135,7 +135,7 @@ exports.getFeedNotes = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
 		const pagina = parseInt(req.query.pagina) || 1;
-		const limite = parseInt(req.query.limite) || 10;
+		const limite = 10;
 		const offset = (pagina - 1) * limite;
 
 		// Contar total de notas visibles para el feed
